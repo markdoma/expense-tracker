@@ -10,8 +10,7 @@ import Link from "next/link";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
-// import { initializeApp } from "firebase/app";
-// import { getFirestore } from "firebase/firestore";
+import { PlusSmallIcon } from "@heroicons/react/20/solid";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -29,46 +28,6 @@ if (!firebase.apps.length) {
 }
 
 const firestore = firebase.firestore();
-
-// const app = initializeApp(firebaseConfig);
-// const firestore = getFirestore(app);
-
-// Create a Firestore instance
-// const firestore = firebase.firestore();
-
-// const defaultExpenses = [
-//   {
-//     id: uuid(),
-//     date: "2023-07-01",
-//     item: "Item 1",
-//     description: "Description 1",
-//     paymentMethod: "gcash",
-//     category: "Category 1",
-//     amount: 100,
-//     user: "Mark",
-//   },
-//   {
-//     id: uuid(),
-//     date: "2023-07-02",
-//     item: "Item 2",
-//     description: "Description 2",
-//     paymentMethod: "cash",
-//     category: "Category 2",
-//     amount: 200,
-//     user: "Jeanne",
-//   },
-// ];
-
-const defaultFormData = {
-  id: "",
-  date: "",
-  item: "",
-  description: "",
-  paymentMethod: "gcash",
-  category: "",
-  amount: "",
-  user: "Mark",
-};
 
 export default function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
@@ -89,31 +48,7 @@ export default function ExpenseTracker() {
 
   const { paymentMethods, categories } = useContext(ExpenseContext);
 
-  // const [expenses, setExpenses] = useState(defaultExpenses);
-  const [formData, setFormData] = useState(defaultFormData);
-  const [user, setUser] = useState("Mark");
   const { register, handleSubmit, reset, setValue } = useForm();
-
-  const handleFormSubmit = async (data) => {
-    console.log(data);
-    if (data.id) {
-      // Update existing expense
-      await firestore.collection("expenses").doc(data.id).update(data);
-    } else {
-      // Add new expense
-      const newExpense = {
-        id: uuid(),
-        date: new Date().toISOString().split("T")[0],
-        ...data,
-        user: user,
-      };
-
-      // await firestore.collection("expenses").doc(newExpense.id).set(newExpense);
-      await firestore.collection("expenses").doc().set(newExpense);
-    }
-
-    resetForm();
-  };
 
   const handleDeleteExpense = async (expenseId) => {
     await firestore.collection("expenses").doc(expenseId).delete();
@@ -135,152 +70,131 @@ export default function ExpenseTracker() {
     reset();
   };
 
-  const handleUserToggle = () => {
-    setUser((prevUser) => (prevUser === "Mark" ? "Jeanne" : "Mark"));
-  };
-
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-4">
-        <button
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-          onClick={handleUserToggle}
-        >
-          {user}
-        </button>
-        <Link href="/parameters">
-          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-            Parameters
-          </button>
-        </Link>
-        {/* <Link href="/dashboard">
-          <button className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded">
-            Dashboard
-          </button>
-        </Link> */}
-        <h1 className="text-2xl font-bold">Expense Tracker</h1>
+      <div>
+        <div className="flex flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
+          <h1 className="text-base font-semibold leading-7 text-gray-900">
+            Expenses
+          </h1>
+          <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
+            <a href="#" className="text-indigo-600">
+              Last 7 days
+            </a>
+            <a href="#" className="text-gray-700">
+              Last 30 days
+            </a>
+            <a href="#" className="text-gray-700">
+              All-time
+            </a>
+          </div>
+          <Link
+            href="/"
+            className="ml-auto flex items-center gap-x-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            <PlusSmallIcon className="-ml-1.5 h-5 w-5" aria-hidden="true" />
+            New expense
+          </Link>
+        </div>
       </div>
-
-      <form onSubmit={handleSubmit(handleFormSubmit)} className="mb-4">
-        <input type="hidden" {...register("id")} value={formData.id} />
-
-        <label className="block mb-2">
-          Item:
-          <input
-            {...register("item", { required: true })}
-            className="border p-2"
-            defaultValue={formData.item}
-          />
-        </label>
-        <br />
-        <label className="block mb-2">
-          Description:
-          <input
-            {...register("description", { required: true })}
-            className="border p-2"
-            defaultValue={formData.description}
-          />
-        </label>
-        <br />
-        <label className="block mb-2">
-          Payment Method:
-          <select
-            {...register("paymentMethod")}
-            className="border p-2"
-            defaultValue={formData.paymentMethod}
-          >
-            {paymentMethods.map((method) => (
-              <option key={method} value={method}>
-                {method}
-              </option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label className="block mb-2">
-          Category:
-          <select
-            {...register("category", { required: true })}
-            className="border p-2"
-            defaultValue={formData.category}
-          >
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-          </select>
-        </label>
-        <br />
-        <label className="block mb-2">
-          Amount:
-          <input
-            {...register("amount", {
-              pattern: /^[0-9]+$/i,
-              valueAsNumber: true,
-              required: true,
-            })}
-            className="border p-2"
-            defaultValue={formData.amount}
-          />
-        </label>
-        <br />
-        <button
-          type="submit"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          {formData.id ? "Update Expense" : "Add Expense"}
-        </button>
-        <button
-          type="button"
-          onClick={resetForm}
-          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2"
-        >
-          Clear
-        </button>
-      </form>
-
-      <table className="border-collapse border w-full">
-        <thead>
-          <tr>
-            <th className="border p-2">Date</th>
-            <th className="border p-2">Item</th>
-            <th className="border p-2">Description</th>
-            <th className="border p-2">Payment Method</th>
-            <th className="border p-2">Category</th>
-            <th className="border p-2">Amount</th>
-            <th className="border p-2">User</th>
-            <th className="border p-2">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {expenses.map((expense) => (
-            <tr key={expense.id}>
-              <td className="border p-2">{expense.date}</td>
-              <td className="border p-2">{expense.item}</td>
-              <td className="border p-2">{expense.description}</td>
-              <td className="border p-2">{expense.paymentMethod}</td>
-              <td className="border p-2">{expense.category}</td>
-              <td className="border p-2">{expense.amount}</td>
-              <td className="border p-2">{expense.user}</td>
-              <td className="border p-2">
-                <button
-                  onClick={() => handleEditExpense(expense.id)}
-                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDeleteExpense(expense.id)}
-                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <table className="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                className="whitespace-nowrap py-3.5 pl-4 pr-3 text-center text-sm font-semibold text-gray-900 sm:pl-0 border p-2"
+              >
+                Date
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                Item
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                Description
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                Payment Method
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                Category
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                Amount
+              </th>
+              <th
+                scope="col"
+                className="whitespace-nowrap px-2 py-3.5 text-center text-sm font-semibold text-gray-900 border p-2"
+              >
+                User
+              </th>
+              <th
+                scope="col"
+                className="relative whitespace-nowrap py-3.5 pl-3 pr-4 sm:pr-0 border p-2"
+              >
+                Action
+                <span className="sr-only">Action</span>
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-200 bg-white">
+            {expenses.map((expense) => (
+              <tr key={expense.id}>
+                <td className="whitespace-nowrap py-2 text-center pl-4 pr-3 text-sm text-gray-500 sm:pl-0 border p-2">
+                  {expense.date}
+                </td>
+                <td className="whitespace-nowrap px-2 text-center py-2 text-sm font-medium text-gray-900 border p-2">
+                  {expense.item}
+                </td>
+                <td className="whitespace-nowrap px-2 text-center py-2 text-sm text-gray-900 border p-2">
+                  {expense.description}
+                </td>
+                <td className="whitespace-nowrap px-2 text-center py-2 text-sm text-gray-900 border p-2">
+                  {expense.paymentMethod}
+                </td>
+                <td className="whitespace-nowrap px-2 py-2 text-center text-sm text-gray-900 border p-2">
+                  {expense.category}
+                </td>
+                <td className="whitespace-nowrap px-2 py-2 text-center text-sm text-gray-900 border p-2">
+                  {expense.amount}
+                </td>
+                <td className="whitespace-nowrap px-2 py-2 text-center text-sm text-gray-900 border p-2">
+                  {expense.user}
+                </td>
+                <td className="relative whitespace-nowrap py-2 text-center pl-3 pr-4 text-right text-sm font-medium sm:pr-0 border p-2 flex justify-center">
+                  <button
+                    onClick={() => handleEditExpense(expense.id)}
+                    className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDeleteExpense(expense.id)}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Pass the expenses data to the Dashboard component */}
       {/* <Dashboard expenses={expenses} /> */}
