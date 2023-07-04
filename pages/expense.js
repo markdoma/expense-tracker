@@ -10,14 +10,17 @@ import Link from "next/link";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 
+// import { initializeApp } from "firebase/app";
+// import { getFirestore } from "firebase/firestore";
+
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCrxXctvYEQIl75mtDWoP0ApIIj77YpInw",
-  authDomain: "doma-exp-tracker.firebaseapp.com",
-  projectId: "doma-exp-tracker",
-  storageBucket: "doma-exp-tracker.appspot.com",
-  messagingSenderId: "690741063724",
-  appId: "1:690741063724:web:c4d7db00b56966a1052189",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -25,8 +28,13 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
-// Create a Firestore instance
 const firestore = firebase.firestore();
+
+// const app = initializeApp(firebaseConfig);
+// const firestore = getFirestore(app);
+
+// Create a Firestore instance
+// const firestore = firebase.firestore();
 
 // const defaultExpenses = [
 //   {
