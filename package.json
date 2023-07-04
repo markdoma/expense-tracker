@@ -1,0 +1,27 @@
+{
+  "name": "expense-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "autoprefixer": "10.4.14",
+    "chart.js": "^4.3.0",
+    "firebase": "^9.23.0",
+    "next": "^13.4.7",
+    "postcss": "8.4.24",
+    "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.45.1",
+    "react-router-dom": "^6.14.1",
+    "react-table": "^7.8.0",
+    "recharts": "^2.7.2",
+    "tailwindcss": "3.3.2",
+    "uuid": "^9.0.0"
+  }
+}
