@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuid } from "uuid";
 
+import { firestore } from "../utils/firebase";
+
 import React, { useContext } from "react";
 import { ExpenseContext } from "../components/context/ExpenseContext";
 import Dashboard from "../components/dashboard";
@@ -12,22 +14,22 @@ import "firebase/compat/firestore";
 
 import { PlusSmallIcon } from "@heroicons/react/20/solid";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
+// // Firebase configuration
+// const firebaseConfig = {
+//   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+//   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+// };
 
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
+// // Initialize Firebase
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 
-const firestore = firebase.firestore();
+// const firestore = firebase.firestore();
 
 export default function ExpenseTracker() {
   const [expenses, setExpenses] = useState([]);
@@ -70,6 +72,30 @@ export default function ExpenseTracker() {
     reset();
   };
 
+  const [numberOfDays, setNumberOfDays] = useState(7); // Initialize numberOfDays with a default value of 7
+
+  const handleFilter = (days) => {
+    setNumberOfDays(days); // Update numberOfDays based on the button clicked
+  };
+
+  const currentDate = new Date(); // Get the current date
+
+  const filteredExpenses = expenses
+    .filter((expense) => {
+      if (numberOfDays === 0) {
+        return true; // Return all expenses for All-time
+      }
+      const expenseDate = new Date(expense.date);
+      const diffInTime = currentDate.getTime() - expenseDate.getTime();
+      const diffInDays = Math.ceil(diffInTime / (1000 * 3600 * 24)); // Calculate the difference in days
+      return diffInDays <= numberOfDays; // Filter expenses within the specified number of days
+    })
+    .sort((a, b) => {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateB - dateA;
+    });
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div>
@@ -78,15 +104,15 @@ export default function ExpenseTracker() {
             Expenses
           </h1>
           <div className="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
-            <a href="#" className="text-indigo-600">
+            <button onClick={() => handleFilter(7)} className="text-indigo-600">
               Last 7 days
-            </a>
-            <a href="#" className="text-gray-700">
+            </button>
+            <button onClick={() => handleFilter(30)} className="text-gray-700">
               Last 30 days
-            </a>
-            <a href="#" className="text-gray-700">
+            </button>
+            <button onClick={() => handleFilter(0)} className="text-gray-700">
               All-time
-            </a>
+            </button>
           </div>
           <Link
             href="/"
@@ -153,7 +179,7 @@ export default function ExpenseTracker() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200 bg-white">
-            {expenses.map((expense) => (
+            {filteredExpenses.map((expense) => (
               <tr key={expense.id}>
                 <td className="whitespace-nowrap py-2 text-center pl-4 pr-3 text-sm text-gray-500 sm:pl-0 border p-2">
                   {expense.date}
@@ -195,9 +221,6 @@ export default function ExpenseTracker() {
           </tbody>
         </table>
       </div>
-
-      {/* Pass the expenses data to the Dashboard component */}
-      {/* <Dashboard expenses={expenses} /> */}
     </div>
   );
 }

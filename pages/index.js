@@ -6,30 +6,13 @@ import React, { useContext } from "react";
 import { ExpenseContext } from "../components/context/ExpenseContext";
 import Dashboard from "../components/dashboard";
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
+import { firestore } from "../utils/firebase";
 
 import { Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
-// Initialize Firebase
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-
-const firestore = firebase.firestore();
 import Link from "next/link";
 
 const defaultFormData = {
@@ -79,7 +62,18 @@ export default function Home() {
     };
   }, []);
 
-  const { paymentMethods, categories } = useContext(ExpenseContext);
+  const paymentMethods = ["gcash", "maya", "cash", "bank transfer"];
+  const categories = [
+    "load",
+    "transportation",
+    "bills",
+    "others",
+    "donation",
+    "food",
+    "travel",
+  ];
+
+  // const { paymentMethods, categories } = useContext(ExpenseContext);
 
   // const [expenses, setExpenses] = useState(defaultExpenses);
   const [formData, setFormData] = useState(defaultFormData);
@@ -430,7 +424,7 @@ export default function Home() {
             {/* Main 3 column grid */}
             <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3 lg:gap-8">
               {/* Left column */}
-              <div className="grid grid-cols-1 gap-4 lg:col-span-2">
+              <div className="grid grid-cols-1 gap-4 lg:col-span-1">
                 <section aria-labelledby="section-1-title">
                   <h2 className="sr-only" id="section-1-title">
                     Section title
@@ -492,7 +486,7 @@ export default function Home() {
                           >
                             {paymentMethods.map((method) => (
                               <option key={method} value={method}>
-                                {method}
+                                {method.toUpperCase()}
                               </option>
                             ))}
                           </select>
@@ -513,7 +507,7 @@ export default function Home() {
                           >
                             {categories.map((category) => (
                               <option key={category} value={category}>
-                                {category}
+                                {category.toUpperCase()}
                               </option>
                             ))}
                           </select>
@@ -560,13 +554,15 @@ export default function Home() {
               </div>
 
               {/* Right column */}
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-1 gap-4 lg:col-span-2">
                 <section aria-labelledby="section-2-title">
                   <h2 className="sr-only" id="section-2-title">
                     Dashboard
                   </h2>
                   <div className="overflow-hidden rounded-lg bg-white shadow">
-                    <div className="p-6">Dashboard Here</div>
+                    <div className="p-6">
+                      <Dashboard />
+                    </div>
                   </div>
                 </section>
               </div>
