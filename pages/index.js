@@ -13,6 +13,8 @@ import { Menu, Popover, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
+import Modal from "../components/Modal";
+
 import Link from "next/link";
 
 const defaultFormData = {
@@ -79,7 +81,7 @@ export default function Home() {
   const [formData, setFormData] = useState(defaultFormData);
   const [user, setUser] = useState("Mark");
   const { register, handleSubmit, reset, setValue } = useForm();
-
+  const [showModal, setShowModal] = useState(false);
   const handleFormSubmit = async (data) => {
     console.log(data);
     if (data.id) {
@@ -96,6 +98,8 @@ export default function Home() {
 
       // await firestore.collection("expenses").doc(newExpense.id).set(newExpense);
       await firestore.collection("expenses").doc().set(newExpense);
+      // Show the modal
+      setShowModal(true);
     }
 
     resetForm();
@@ -123,6 +127,10 @@ export default function Home() {
 
   const handleUserToggle = () => {
     setUser((prevUser) => (prevUser === "Mark" ? "Jeanne" : "Mark"));
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -568,6 +576,8 @@ export default function Home() {
               </div>
             </div>
           </div>
+          {/* Modal */}
+          {showModal && <Modal onClose={closeModal} />}
         </main>
         <footer>
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
