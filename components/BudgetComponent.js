@@ -60,28 +60,30 @@ const BudgetComponent = () => {
 
   return (
     <div className="flex justify-center">
-      <table className="table-auto">
-        <thead>
-          <tr>
-            <th className="px-4 py-2">Category</th>
-            <th className="px-4 py-2">Total</th>
-            <th className="px-4 py-2">Status</th>
-            <th className="px-4 py-2">Remaining Budget</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.entries(expenses).map(([category, total]) => (
-            <tr key={category} className={total > budget ? "bg-red-200" : ""}>
-              <td className="px-4 py-2">{category}</td>
-              <td className="px-4 py-2">{total}</td>
-              <td className="px-4 py-2">
-                {total > budget ? "Over Budget" : "Within Budget"}
-              </td>
-              <td className="px-4 py-2">{budget - total}</td>
+      <div className="overflow-x-auto">
+        <table className="table-auto">
+          <thead>
+            <tr>
+              <th className="px-2 py-2">Category</th>
+              <th className="px-2 py-2">Total</th>
+              {/* <th className="px-2 py-2">Status</th> */}
+              <th className="px-2 py-2">Remaining</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {Object.entries(expenses).map(([category, total]) => (
+              <tr key={category} className={total > budget ? "bg-red-200" : ""}>
+                <td className="px-2 py-2 flex justify-center">{category}</td>
+                <td className="px-2 py-2">{total}</td>
+                {/* <td className="px-2 py-2 ">{total > budget ? "Over" : ""}</td> */}
+                <td className="px-2 py-2 flex justify-center">
+                  {budget - total}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
