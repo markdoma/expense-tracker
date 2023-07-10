@@ -1,0 +1,277 @@
+[
+  {
+    "Category": "Airbnb",
+    "Budget": 1250,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Airfare",
+    "Budget": 2500,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Bus Fare",
+    "Budget": 1000,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Car expenses",
+    "Budget": 500,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Carpool",
+    "Budget": 3200,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Charity",
+    "Budget": 1000,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Church",
+    "Budget": 400,
+    "Main Category": "CHARITY/GIFTS"
+  },
+  {
+    "Category": "Clothing",
+    "Budget": 700,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Commute Fare",
+    "Budget": 1200,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Daily Allowance_Jeanne",
+    "Budget": 1000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Daily Allowance_Mark",
+    "Budget": 3000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Date  (Elle & Biboy)",
+    "Budget": 2000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Date  (Mark & Jeanne)",
+    "Budget": 2000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Dates (Mama)",
+    "Budget": 2000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Diesel",
+    "Budget": 10000,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Doctor/Dentist",
+    "Budget": 5000,
+    "Main Category": "HEALTH"
+  },
+  {
+    "Category": "Drinking Water",
+    "Budget": 600,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Emergency Fund",
+    "Budget": 7200,
+    "Main Category": "SAVINGS"
+  },
+  {
+    "Category": "Entertainment",
+    "Budget": 1000,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Food (home)",
+    "Budget": 2500,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Food (Weekend)",
+    "Budget": 8000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Food(weeked food * 3(breakfast+lunch+dinner))",
+    "Budget": 2500,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Gifts(Christmas,birthday) Cake",
+    "Budget": 1000,
+    "Main Category": "CHARITY/GIFTS"
+  },
+  {
+    "Category": "Globe",
+    "Budget": 2100,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Groceries/Marketing",
+    "Budget": 13000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Haircut",
+    "Budget": 500,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "HOA Dues",
+    "Budget": 425,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Kumon",
+    "Budget": 2000,
+    "Main Category": "EDUCATION"
+  },
+  {
+    "Category": "LNP Tithes",
+    "Budget": 5000,
+    "Main Category": "CHARITY/GIFTS"
+  },
+  {
+    "Category": "Load_Jeanne",
+    "Budget": 380,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Load_Mark",
+    "Budget": 560,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Loan to people",
+    "Budget": 500,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "LPG",
+    "Budget": 1000,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Medicine/Drugs",
+    "Budget": 1000,
+    "Main Category": "HEALTH"
+  },
+  {
+    "Category": "Meralco Bill",
+    "Budget": 5000,
+    "Main Category": "UTILITIES"
+  },
+  {
+    "Category": "Mom and Dad, Mama",
+    "Budget": 1250,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "MWG Food",
+    "Budget": 4200,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Other- Pasalubong/Souvenirs",
+    "Budget": 250,
+    "Main Category": "VACATION"
+  },
+  {
+    "Category": "Others - Misc",
+    "Budget": 1400,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Parking Fee",
+    "Budget": 800,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Pru Life - Elle",
+    "Budget": 7000,
+    "Main Category": "INVESTMENTS"
+  },
+  {
+    "Category": "Pru Life - Jeanne",
+    "Budget": 3000,
+    "Main Category": "INVESTMENTS"
+  },
+  {
+    "Category": "Rabi's Food",
+    "Budget": 200,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Repairs and Maintenance",
+    "Budget": 1000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "Salaries Exp",
+    "Budget": 6000,
+    "Main Category": "HOME EXPENSES"
+  },
+  {
+    "Category": "School Supplies",
+    "Budget": 1000,
+    "Main Category": "EDUCATION"
+  },
+  {
+    "Category": "SSS",
+    "Budget": 700,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Sunlife",
+    "Budget": 10000,
+    "Main Category": "INVESTMENTS"
+  },
+  {
+    "Category": "Tip",
+    "Budget": 120,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Toll Fee Cash",
+    "Budget": 500,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Toll Fee RFID",
+    "Budget": 500,
+    "Main Category": "TRANSPORTATION"
+  },
+  {
+    "Category": "Toys / Pasalubong - Kids",
+    "Budget": 300,
+    "Main Category": "MISCELLANEOUS"
+  },
+  {
+    "Category": "Tuition Elle & Biboy",
+    "Budget": 7500,
+    "Main Category": "EDUCATION"
+  },
+  {
+    "Category": "Tuition Jeanne",
+    "Budget": 6200,
+    "Main Category": "EDUCATION"
+  },
+  {
+    "Category": "Water Bill",
+    "Budget": 300,
+    "Main Category": "UTILITIES"
+  }
+]

@@ -9,9 +9,6 @@ import { ExpenseContext } from "../components/context/ExpenseContext";
 import Dashboard from "../components/dashboard";
 import Link from "next/link";
 
-import firebase from "firebase/compat/app";
-import "firebase/compat/firestore";
-
 import { PlusSmallIcon } from "@heroicons/react/20/solid";
 
 // // Firebase configuration

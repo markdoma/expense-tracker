@@ -4,7 +4,8 @@ import { v4 as uuid } from "uuid";
 
 import React, { useContext } from "react";
 import { ExpenseContext } from "../components/context/ExpenseContext";
-import Dashboard from "../components/dashboard";
+import BudgetComponent from "../components/BudgetComponent";
+import BudgetUploader from "../components/BudgetUploader";
 
 import { firestore } from "../utils/firebase";
 
@@ -35,12 +36,12 @@ const user = {
 const navigation = [
   { name: "Home", href: "#", current: true },
   { name: "Expenses", href: "/expense", current: false },
-  { name: "Parameters", href: "/parameters", current: false },
+  { name: "Dashboard", href: "/dashboard", current: false },
 ];
 const userNavigation = [
   { name: "Home", href: "#" },
   { name: "Expenses", href: "/expense" },
-  { name: "Parameters", href: "/parameters" },
+  { name: "Dashboard", href: "/dashboard" },
 ];
 
 function classNames(...classes) {
@@ -64,15 +65,64 @@ export default function Home() {
     };
   }, []);
 
-  const paymentMethods = ["gcash", "maya", "cash", "bank transfer"];
+  const paymentMethods = ["gcash", "maya", "cash", "lbp", "ub", "bpi", "tonik"];
   const categories = [
-    "load",
-    "transportation",
-    "bills",
-    "others",
-    "donation",
-    "food",
-    "travel",
+    "Groceries/Aprketing",
+    "Repairs and Maintenance",
+    "Date  (Elle & Biboy)",
+    "Date  (Aprk & Jeanne)",
+    "Dates (Mama)",
+    "Food (Weekend)",
+    "Salaries Exp",
+    "Food (home)",
+    "Daily Allowance_Jeanne",
+    "Daily Allowance_Aprk",
+    "Tuition Elle & Biboy",
+    "Tuition Jeanne",
+    "Kumon",
+    "School Supplies",
+    "Church",
+    "LNP Tithes",
+    "Gifts(Christmas,birthday) Cake",
+    "Airfare",
+    "Bus Fare",
+    "Airbnb",
+    "Food(weeked food * 3(breakfast+lunch+dinner))",
+    "Entertainment",
+    "Other- Pasalubong/Souvenirs",
+    "Emergency Fund",
+    "Sunlife",
+    "Pru Life",
+    "First Metro Securities",
+    "UITF",
+    "Commute Fare",
+    "Diesel",
+    "Parking Fee",
+    "Toll Fee Cash",
+    "Doctor/Dentist",
+    "Medicine/Drugs",
+    "Emergency",
+    "other",
+    "Mom and Dad, Mama",
+    "Toys / Pasalubong - Kids",
+    "Rabi's Food",
+    "Car expenses",
+    "Tip",
+    "Charity",
+    "Loan to people",
+    "Haircut",
+    "SSS",
+    "MWG Food",
+    "Clothing",
+    "HOA Dues",
+    "Others - Misc",
+    "Meralco Bill",
+    "Water Bill",
+    "Globe",
+    "Drinking Water",
+    "LPG",
+    "Load_Mark",
+    "Load_Jeanne",
   ];
 
   // const { paymentMethods, categories } = useContext(ExpenseContext);
@@ -109,17 +159,6 @@ export default function Home() {
     await firestore.collection("expenses").doc(expenseId).delete();
   };
 
-  const handleEditExpense = (expenseId) => {
-    const expenseToEdit = expenses.find((expense) => expense.id === expenseId);
-    if (expenseToEdit) {
-      setFormData(expenseToEdit);
-      // Set form field values using setValue
-      Object.entries(expenseToEdit).forEach(([key, value]) => {
-        setValue(key, value);
-      });
-    }
-  };
-
   const resetForm = () => {
     setFormData(defaultFormData);
     reset();
@@ -141,40 +180,10 @@ export default function Home() {
             <>
               <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
                 <div className="relative flex items-center justify-center py-5 lg:justify-between">
-                  {/* Logo */}
-                  {/* <div className="absolute left-0 flex-shrink-0 lg:static">
-                    <a href="#">
-                      <span className="sr-only">Your Company</span>
-                      <img
-                        className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                        alt="Your Company"
-                      />
-                    </a>
-                  </div> */}
-
                   {/* Right section on desktop */}
                   <div className="hidden lg:ml-4 lg:flex lg:items-center lg:pr-0.5">
-                    {/* <button
-                      type="button"
-                      className="flex-shrink-0 rounded-full p-1 text-indigo-200 hover:bg-white hover:bg-opacity-10 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
-                    >
-                      <span className="sr-only">View notifications</span>
-                      <BellIcon className="h-6 w-6" aria-hidden="true" />
-                    </button> */}
-
-                    {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-4 flex-shrink-0">
-                      <div>
-                        {/* <Menu.Button className="flex rounded-full bg-white text-sm ring-2 ring-white ring-opacity-20 focus:outline-none focus:ring-opacity-100">
-                          <span className="sr-only">Open user menu</span>
-                          <img
-                            className="h-8 w-8 rounded-full"
-                            src={user.imageUrl}
-                            alt=""
-                          />
-                        </Menu.Button> */}
-                      </div>
+                      <div></div>
                       <Transition
                         as={Fragment}
                         leave="transition ease-in duration-75"
@@ -201,30 +210,8 @@ export default function Home() {
                       </Transition>
                     </Menu>
                   </div>
-
-                  {/* Search */}
-                  {/* <div className="min-w-0 flex-1 px-12 lg:hidden">
-                    <div className="mx-auto w-full max-w-xs">
-                      <label htmlFor="desktop-search" className="sr-only">
-                        Search
-                      </label>
-                      <div className="relative text-white focus-within:text-gray-600">
-                        <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                          <MagnifyingGlassIcon
-                            className="h-5 w-5"
-                            aria-hidden="true"
-                          />
-                        </div>
-                        <input
-                          id="desktop-search"
-                          className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
-                          placeholder="Search"
-                          type="search"
-                          name="search"
-                        />
-                      </div>
-                    </div>
-                  </div> */}
+                  {/* Only when updating the Budget */}
+                  {/* <BudgetUploader /> */}
                   <button
                     className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
                     onClick={handleUserToggle}
@@ -270,28 +257,7 @@ export default function Home() {
                         ))}
                       </nav>
                     </div>
-                    <div>
-                      {/* <div className="mx-auto w-full max-w-md">
-                        <label htmlFor="mobile-search" className="sr-only">
-                          Search
-                        </label>
-                        <div className="relative text-white focus-within:text-gray-600">
-                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                            <MagnifyingGlassIcon
-                              className="h-5 w-5"
-                              aria-hidden="true"
-                            />
-                          </div>
-                          <input
-                            id="mobile-search"
-                            className="block w-full rounded-md border-0 bg-white/20 py-1.5 pl-10 pr-3 text-white placeholder:text-white focus:bg-white focus:text-gray-900 focus:ring-0 focus:placeholder:text-gray-500 sm:text-sm sm:leading-6"
-                            placeholder="Search"
-                            type="search"
-                            name="search"
-                          />
-                        </div>
-                      </div> */}
-                    </div>
+                    <div></div>
                   </div>
                 </div>
               </div>
@@ -343,69 +309,8 @@ export default function Home() {
                               </Popover.Button>
                             </div>
                           </div>
-                          {/* <div className="mt-3 space-y-1 px-2">
-                            <a
-                              href="#"
-                              className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                            >
-                              Home
-                            </a>
-                            <a
-                              href="#"
-                              className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                            >
-                              Profile
-                            </a>
-                            <a
-                              href="#"
-                              className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                            >
-                              Resources
-                            </a>
-                            <a
-                              href="#"
-                              className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                            >
-                              Company Directory
-                            </a>
-                            <a
-                              href="#"
-                              className="block rounded-md px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-100 hover:text-gray-800"
-                            >
-                              Openings
-                            </a>
-                          </div> */}
                         </div>
                         <div className="pb-2 pt-4">
-                          {/* <div className="flex items-center px-5">
-                            <div className="flex-shrink-0">
-                              <img
-                                className="h-10 w-10 rounded-full"
-                                src={user.imageUrl}
-                                alt=""
-                              />
-                            </div>
-                            <div className="ml-3 min-w-0 flex-1">
-                              <div className="truncate text-base font-medium text-gray-800">
-                                {user.name}
-                              </div>
-                              <div className="truncate text-sm font-medium text-gray-500">
-                                {user.email}
-                              </div>
-                            </div>
-                            <button
-                              type="button"
-                              className="ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                            >
-                              <span className="sr-only">
-                                View notifications
-                              </span>
-                              <BellIcon
-                                className="h-6 w-6"
-                                aria-hidden="true"
-                              />
-                            </button>
-                          </div> */}
                           <div className="mt-3 space-y-1 px-2">
                             {userNavigation.map((item) => (
                               <Link
@@ -452,24 +357,9 @@ export default function Home() {
                         <div className="mb-4">
                           <label
                             className="block font-bold mb-2"
-                            htmlFor="item"
+                            htmlFor="details"
                           >
-                            Item:
-                          </label>
-                          <input
-                            {...register("item", { required: true })}
-                            id="item"
-                            className="border p-2 w-full"
-                            defaultValue={formData.item}
-                          />
-                        </div>
-
-                        <div className="mb-4">
-                          <label
-                            className="block font-bold mb-2"
-                            htmlFor="description"
-                          >
-                            Description:
+                            Details:
                           </label>
                           <input
                             {...register("description", { required: true })}
@@ -569,7 +459,7 @@ export default function Home() {
                   </h2>
                   <div className="overflow-hidden rounded-lg bg-white shadow">
                     <div className="p-6">
-                      <Dashboard />
+                      <BudgetComponent />
                     </div>
                   </div>
                 </section>
