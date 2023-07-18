@@ -356,6 +356,26 @@ export default function Home() {
                         <div className="mb-4">
                           <label
                             className="block font-bold mb-2"
+                            htmlFor="amount"
+                          >
+                            Amount:
+                          </label>
+                          <input
+                            {...register("amount", {
+                              pattern: /^[0-9]+$/i,
+                              valueAsNumber: true,
+                              required: true,
+                            })}
+                            id="amount"
+                            className="border p-2 w-full"
+                            defaultValue={formData.amount}
+                            placeholder="Enter amount"
+                          />
+                        </div>
+
+                        <div className="mb-4">
+                          <label
+                            className="block font-bold mb-2"
                             htmlFor="details"
                           >
                             Details:
@@ -365,6 +385,7 @@ export default function Home() {
                             id="description"
                             className="border p-2 w-full"
                             defaultValue={formData.description}
+                            placeholder="Enter details"
                           />
                         </div>
 
@@ -379,8 +400,12 @@ export default function Home() {
                             {...register("paymentMethod")}
                             id="paymentMethod"
                             className="border p-2 w-full"
-                            defaultValue={formData.paymentMethod}
+                            defaultValue=""
+                            required
                           >
+                            <option value="" disabled hidden>
+                              Select payment method
+                            </option>
                             {paymentMethods.map((method) => (
                               <option key={method} value={method}>
                                 {method.toUpperCase()}
@@ -400,33 +425,19 @@ export default function Home() {
                             {...register("category", { required: true })}
                             id="category"
                             className="border p-2 w-full"
-                            defaultValue={formData.category}
+                            value={formData.category}
+                            defaultValue=""
+                            required
                           >
+                            <option value="" disabled hidden>
+                              Select category
+                            </option>
                             {categories.map((category) => (
                               <option key={category} value={category}>
                                 {category.toUpperCase()}
                               </option>
                             ))}
                           </select>
-                        </div>
-
-                        <div className="mb-4">
-                          <label
-                            className="block font-bold mb-2"
-                            htmlFor="amount"
-                          >
-                            Amount:
-                          </label>
-                          <input
-                            {...register("amount", {
-                              pattern: /^[0-9]+$/i,
-                              valueAsNumber: true,
-                              required: true,
-                            })}
-                            id="amount"
-                            className="border p-2 w-full"
-                            defaultValue={formData.amount}
-                          />
                         </div>
 
                         <div className="flex">

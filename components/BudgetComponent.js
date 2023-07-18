@@ -96,7 +96,12 @@ const BudgetComponent = () => {
             <h3 className="text-lg font-semibold mb-2">
               Total for Filtered Month-Year:
             </h3>
-            <p className="text-2xl font-bold text-center">{filteredTotal}</p>
+            <p className="text-2xl font-bold text-center">
+              {filteredTotal.toLocaleString("en-PH", {
+                style: "currency",
+                currency: "PHP",
+              })}
+            </p>
           </div>
         </div>
         <table className="table-auto">
@@ -116,9 +121,13 @@ const BudgetComponent = () => {
                 }
               >
                 <td className="px-2 py-2 flex justify-center">{category}</td>
-                <td className="px-2 py-2">{expenses[category] || 0}</td>
+                <td className="px-2 py-2">
+                  {expenses[category].toFixed(2) || 0}
+                </td>
                 <td className="px-2 py-2 flex justify-center">
-                  {remainingBudget[category]}
+                  {remainingBudget[category]
+                    ? remainingBudget[category].toFixed(2)
+                    : 0}
                 </td>
               </tr>
             ))}
