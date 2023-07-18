@@ -107,7 +107,6 @@ export default function Home() {
     "MWG Food",
     "Other- Pasalubong/Souvenirs",
     "Others - Misc",
-    "Others - Misc",
     "Parking Fee",
     "Pru Life",
     "Rabi's Food",
