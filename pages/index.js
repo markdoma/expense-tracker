@@ -425,7 +425,6 @@ export default function Home() {
                             {...register("category", { required: true })}
                             id="category"
                             className="border p-2 w-full"
-                            value={formData.category}
                             defaultValue=""
                             required
                           >
